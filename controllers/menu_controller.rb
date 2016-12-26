@@ -14,6 +14,7 @@ class MenuController
         puts "3 - Search for an entry"
         puts "4 - Import entries from a CSV"
         puts "5 - Exit"
+        puts "6 - View Entry Number n"
         print "Enter your selection: "
         
         selection = gets.to_i
@@ -38,11 +39,29 @@ class MenuController
             when 5
                 puts "Good-bye!"
                 exit(0)
+            when 6
+                if address_book.entries.count > 0 
+                    system "clear"
+                    puts "Select an entry between 1 and #{address_book.entries.count} to view."
+                    view_entry_n(gets.to_i - 1)
+                else
+                    system "clear"
+                    puts "There are no entries to view."
+                end
+                main_menu
             else
                 system "clear"
                 puts "Sorry, that is not a valid input"
                 main_menu
         end
+    end
+    
+    def view_entry_n(entry)
+        until entry >= 0 && entry < address_book.entries.count 
+            puts "Please enter a valid entry number."
+            entry = gets.to_i - 1
+        end
+        puts address_book.entries[entry].to_s
     end
     
     def view_all_entries
