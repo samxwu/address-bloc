@@ -2,6 +2,7 @@ require_relative '../models/address_book'
 
 RSpec.describe AddressBook do
     let(:book) {AddressBook.new}
+    let(:book2) {AddressBook.new}
     
     def check_entry(entry, expected_name, expected_number, expected_email)
         expect(entry.name).to eq expected_name
@@ -41,7 +42,7 @@ RSpec.describe AddressBook do
        entry_five = book.entries[4]
        check_entry(entry_five, "Sussie", "555-555-2036", "sussie@blocmail.com")
      end
-
+    
      it "initializes entries as an array" do
         expect(book.entries).to be_an(Array)
      end
@@ -83,7 +84,6 @@ RSpec.describe AddressBook do
     
     describe "#import_from_csv" do
         it "imports the correct number of entries" do
-        # #3
         book.import_from_csv("entries.csv")
         book_size = book.entries.size
  
@@ -92,5 +92,39 @@ RSpec.describe AddressBook do
         end
     end
     
-
+    describe "Importing from entries_2.csv" do
+        it "imports the correct number of entries from entries_2.csv" do
+        book2.import_from_csv("entries_2.csv")
+        book_size2 = book2.entries.size
+ 
+        # Check the size of the entries in AddressBook
+        expect(book_size2).to eq 3
+        end
+        
+        # TESTING IMPORT FROM entries_2.csv
+     
+        it "book2 responds to entries" do
+            expect(book2).to respond_to(:entries)
+    
+            book2.import_from_csv("entries_2.csv")
+            entry_one2 = book2.entries[0]
+            check_entry(entry_one2, "Aiden", "555-444-4854", "aiden@blocmail.com")
+        end
+     
+        it "imports the 2nd entry from entries_2.csv" do
+            book2.import_from_csv("entries_2.csv")
+            entry_two2 = book2.entries[1]
+            check_entry(entry_two2, "Allen", "555-444-5415", "allen@blocmail.com")
+        end
+     
+        it "imports the 3rd entry from entries_2.csv" do
+            book2.import_from_csv("entries_2.csv")
+            entry_three2 = book2.entries[2]
+            check_entry(entry_three2, "Aurther", "555-444-3660", "aurther@blocmail.com")
+        end
+    end
 end
+
+
+
+    
